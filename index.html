@@ -3,24 +3,34 @@
 
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href = "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="app.css">
   <script type="text/javascript" src="app.js"></script>
   <script type="text/javascript" src="myCtrl.js"></script>
+  <script type="text/javascript" src="parentCtrl.js"></script>
+  <script type="text/javascript" src="childCtrl.js"></script>
+  <script type="text/javascript" src="grandChildCtrl.js"></script>
   <script type="text/javascript" src="namesController.js"></script>
+  <script type="text/javascript" src="customerCtrl.js"></script>
+  <script type="text/javascript" src="exampleCtrl.js"></script>
+  <script type="text/javascript" src="todoCtrl.js"></script>
 </head>
 
 <body>
+ <h1><strong> Basic examples of AngularJS </strong></h1>
  <div ng-app="myApp" ng-controller="myCtrl">
 
  <h2> Using controller and filters</h2>
-First Name: <input type="text" ng-model="firstName"><br>
-Last Name: <input type="text" ng-model="lastName"><br>
+First Name: <input type="text" ng-model="name"><br>
+Last Name: <input type="text" ng-model="srname"><br>
 <br>
-Full Name: {{firstName }} {{ lastName | uppercase }}
+Your name is: {{name }} and Your srname is:  {{ srname | uppercase }}
 
 <hr>
 
 <h2> Using  ng-repeat</h2>
+     <!-- section for ng repeat -->
      <div ng-app="myApp" ng-controller="namesController">
 
          <ul>
@@ -38,9 +48,139 @@ Full Name: {{firstName }} {{ lastName | uppercase }}
                  {{ (x.brand | uppercase) + ', ' + x.model }}
              </li>
          </ul>
+         <hr>
 
 
+         <!-- directives examples -->
+         <h2> Directives </h2>
+         <div ng-init="name='Vesko Vujovic'" id="directives">
+         <p><strong> ng-init example</strong></p>
+         <span data-ng-bind="name"></span>
+
+         <p><strong> expressions</strong></p>
+         {{ 20 + 20}}
+         <hr>
+         <div ng-init="number=5; cost=5"></div>
+         <p> ng-bind example</p>
+         <p><strong data-ng-bind="number * cost"> expressions with numbers</strong></p>
+         <hr>
+
+         <p>Using ng-bind with objects</p>
+         <div ng-controller="myCtrl" ng-init="person={lastname: 'Vujovic', firstname:'Vesko'}">
+             <p><strong data-ng-bind="person.lastname"> ng-bind with objects</strong></p>
+         </div>
+
+         <hr>
+
+         <p>Using ng-bind with objects</p>
+         <div ng-init="points=[1,15,56,46,89]"></div>
+         <p><strong> ng-init arrays, the 3rd element in array is {{ points[2]}}   </strong></p>
+         <hr>
+
+         <div ng-controller="myCtrl">
+             <p>Example with controller functions</p>
+             First Name: <input type="text" ng-model="person.firstName"><br>
+             Last Name: <input type="text" ng-model="person.lastName"><br>
+             <p><strong> {{ fullName() }}  </strong></p>
+             <hr>
+         </div>
+
+
+         <p>Example - Cost Calculator</p>
+         <input type="number" ng-model="quantity">
+         <input type="number" ng-model="price">
+         <p> Total price: {{ quantity * price}}</p>
+         <hr>
+
+         <p>Example - Cost Calculator</p>
+         <input type="number" ng-model="quant">
+         <input type="number" ng-model="pri">
+         <p> Total price: {{ (quant * pri) | currency }}</p>
+         <hr>
+
+         </div>
      </div>
+
+     <!--Nesting divs examples -->
+     <h2> Example with nested controllers</h2>
+     <div class="spicy">
+         <div ng-controller="parentCtrl">
+            <p>Good {{timeOfDay}}, {{name}}</p>
+             <div ng-controller="childCtrl">
+                 <p> Good {{timeOfDay}}, {{name}}</p>
+                  <div ng-controller="grandChildCtrl">
+                      <p> Good {{timeOfDay}}, {{name}}</p>
+                  </div>
+
+             </div>
+         </div>
+     </div>
+     <hr>
+
+     <h2> Example with loading data from remote server</h2>
+     <div ng-controller="customerCtrl">
+         <ul>
+             <li ng-repeat="x in names">
+                 {{ x.Name + ',' + x.Country}}
+             </li>
+         </ul>
+     </div>
+     <hr>
+
+     <h2> Example with loading data from remote server with filter</h2>
+     <div ng-controller="customerCtrl">
+        <table>
+            <tr ng-repeat="x in names">
+             <td>{{ x.Name | uppercase}}</td>
+             <td>{{x.Country | uppercase }}</td>
+            </tr>
+        </table>
+
+        <h2> Display data with indexes</h2>
+         <table>
+             <tr ng-repeat="x in names">
+                 <td>{{ $index + 1 }}</td>
+                 <td>{{ x.Name }}</td>
+                 <td>{{ x.Country }}</td>
+             </tr>
+         </table>
+     </div>
+     <hr>
+
+     <h2>Examples using bootstrap in angular </h2>
+     <div class="container-fluid" ng-controller="exampleCtrl">
+         <div class="row">
+             <div class="col-sm-6">
+                 <table class="table table-striped">
+                     <tr ng-repeat="x in names">
+                         <td>
+                             {{ x.Name }}
+                         </td>
+                         <td>
+                             {{ x.City }}
+                         </td>
+                     </tr>
+                 </table>
+             </div>
+         </div>
+     </div>
+
+
+    <h2> Todo Task App example</h2>
+    <div ng-controller="todoCtrl">
+        <form ng-submit="addToList()">
+            <input type="text" ng-model="todoInput" size="50" placeholder="Add New">
+            <input type="submit" value="Add New">
+        </form>
+
+        <div ng-repeat="x in todoList">
+            <input type="checkbox" ng-model="x.done">
+            <span ng-bind="x.todoText"></span>
+        </div>
+
+        <button ng-click="remove()">Remove completed</button>
+
+    </div>
 
 
 </div>
