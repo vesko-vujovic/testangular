@@ -87,7 +87,12 @@
                 "City" : "Warszawa",
                 "Country" : "Poland"
             }
-        ]
+        ];
+
+
+
+
+
     };
 
     app.controller('exampleCtrl',exampleCtrl);

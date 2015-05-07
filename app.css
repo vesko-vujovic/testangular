@@ -20,3 +20,11 @@ table tr:nth-child(even) {
     background-color: #ffffff;
 }
 */
+
+.red{
+    background-color: red;
+}
+
+.blue {
+    background-color: blue;
+}
