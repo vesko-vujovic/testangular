@@ -16,9 +16,8 @@ app.directive('mine', function(){
 	    /* These are examples of selection children elements and applying some css style to them  
 	     * into angular.element() we must pass DOM element and then apply to them css 
 	     */
-	    angular.element(element.children()[0]).css({"background-color": "blue"});
+	    angular.element(element.children()[0]).css({"background-color": "blue", "color" : "white"});
 	    angular.element(element.children()[1]).css({"font-size": "46px"});
-
 
 	   },
 
